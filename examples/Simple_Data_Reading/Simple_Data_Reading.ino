@@ -1,6 +1,6 @@
 /**
  * This is a simple demo code that reads the Temperature and Humidity of the "SHTC3 RS485 Modbus RTU".
- * With default sensor configuration parameters: Baudrate 9600 bit/s ; Address 0x01.
+ * With default sensor configuration parameters: Baudrate 4800 bit/s ; Address 0x01.
  *
  * There are 2 ways to use it:
  * 1. Use the Struct variable "dataSHTC3"

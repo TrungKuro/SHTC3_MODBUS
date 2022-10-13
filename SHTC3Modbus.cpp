@@ -86,7 +86,7 @@ void SHTC3::setTimeout(uint16_t timeOut)
 
 /* --------------------------------- Struct -------------------------------- */
 
-dataSHT SHTC3::getData()
+dataSHTC3 SHTC3::getData()
 {
   dataSHTC3 value;
 
