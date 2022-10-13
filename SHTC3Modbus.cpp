@@ -1,19 +1,26 @@
 /*!
- *  @file SHTxxModbus.h
+ *  @file SHTC3Modbus.h
  *
- *  This is a library for the ...
+ *  This library is for the "SHTC3 RS485 Modbus RTU" series of sensors.
+ *  These sensors communicate via RS485 standard.
+ *  So you will need an "RS485 to UART (TTL) communication converter circuit" for use with Microcontrollers.
+ *  Like, UNO board, MEGA board, ...
  *
- *  These sensors use RS485 to communicate, 2 pins are required to interface.
+ *  Wiring diagram of SHT3C with "Communication Converter Circuit":
+ *  V+      : BROWN         - Power supply 5~28VDC
+ *  V-      : BLACK         - Power supply 0VDC (Mass)
+ *  RS485-A : YELLOW/GREEN  - Signal wire A
+ *  RS485-B : BLUE          - Signal wire B
  *
- *  TrungKuro (Hshop).
+ *  @author TrungKuro (Hshop)
  */
 
-#include "SHTxxModbus.h"
+#include "SHTC3Modbus.h"
 #include "ModbusCRC.h"
 
-/* ------------------------------------------------------------------------- */
+/* ------------------------------ Constructor ------------------------------ */
 
-SHT::SHT(uint8_t baud, uint8_t addr)
+SHTC3::SHTC3(uint8_t baud, uint8_t addr)
 {
   port = &Serial;
   typeSerial = HARD_SERIAL;
@@ -22,7 +29,7 @@ SHT::SHT(uint8_t baud, uint8_t addr)
   _addr = addr;
 }
 
-SHT::SHT(uint8_t rxPin, uint8_t txPin, uint8_t baud, uint8_t addr)
+SHTC3::SHTC3(uint8_t rxPin, uint8_t txPin, uint8_t baud, uint8_t addr)
 {
   SoftwareSerial *ss = new SoftwareSerial(rxPin, txPin);
   port = ss;
@@ -32,9 +39,9 @@ SHT::SHT(uint8_t rxPin, uint8_t txPin, uint8_t baud, uint8_t addr)
   _addr = addr;
 }
 
-/* ------------------------------------------------------------------------- */
+/* ----------------------------- Initialization ---------------------------- */
 
-void SHT::begin(uint16_t baud)
+void SHTC3::begin(uint16_t baud)
 {
   switch (baud)
   {
@@ -63,25 +70,25 @@ void SHT::begin(uint16_t baud)
   }
 }
 
-void SHT::setTimeout(uint16_t timeOut)
+void SHTC3::setTimeout(uint16_t timeOut)
 {
-  if (timeOut < MIN_SHT_TIMEOUT)
+  if (timeOut < MIN_SHTC3_TIMEOUT)
   {
-    _timeOut = MIN_SHT_TIMEOUT;
+    _timeOut = MIN_SHTC3_TIMEOUT;
   }
-  else if (timeOut > MAX_SHT_TIMEOUT)
+  else if (timeOut > MAX_SHTC3_TIMEOUT)
   {
-    _timeOut = MAX_SHT_TIMEOUT;
+    _timeOut = MAX_SHTC3_TIMEOUT;
   }
   else
     _timeOut = timeOut;
 }
 
-/* ------------------------------------------------------------------------- */
+/* --------------------------------- Struct -------------------------------- */
 
-dataSHT SHT::getData()
+dataSHT SHTC3::getData()
 {
-  dataSHT value;
+  dataSHTC3 value;
 
   /* Remove all previous junk data (if have) */
   while (port->available())
@@ -139,7 +146,7 @@ dataSHT SHT::getData()
     }
     else
     {
-      DEBUG_PRINTLN("Error CRC in Get Data");
+      DEBUG_PRINTLN(F("Error CRC in Get Data"));
       value.temperatureC = 0.0;
       value.temperatureF = 0.0;
       value.humidity = 0.0;
@@ -147,7 +154,7 @@ dataSHT SHT::getData()
   }
   else
   {
-    DEBUG_PRINTLN("Timeout Get Data");
+    DEBUG_PRINTLN(F("Timeout when Get Data"));
     value.temperatureC = 0.0;
     value.temperatureF = 0.0;
     value.humidity = 0.0;
@@ -156,11 +163,11 @@ dataSHT SHT::getData()
   return value;
 }
 
-/* ------------------------------------------------------------------------- */
+/* ------------------------------- Read Data ------------------------------- */
 
-float SHT::readTemperature(bool isDegreeCelsius)
+float SHTC3::readTemperature(bool isDegreeCelsius)
 {
-  dataSHT value = getData();
+  dataSHTC3 value = getData();
 
   if (isDegreeCelsius)
   {
@@ -172,16 +179,16 @@ float SHT::readTemperature(bool isDegreeCelsius)
   }
 }
 
-float SHT::readHumidity()
+float SHTC3::readHumidity()
 {
-  dataSHT value = getData();
+  dataSHTC3 value = getData();
 
   return value.humidity;
 }
 
-/* ------------------------------------------------------------------------- */
+/* --------------------------- Read Configuration -------------------------- */
 
-uint16_t SHT::readBaudrate()
+uint16_t SHTC3::readBaudrate()
 {
   uint16_t value;
 
@@ -250,20 +257,20 @@ uint16_t SHT::readBaudrate()
     }
     else
     {
-      DEBUG_PRINTLN("Error CRC in Get Baud");
+      DEBUG_PRINTLN(F("Error CRC in Get Baud"));
       value = 0;
     }
   }
   else
   {
-    DEBUG_PRINTLN("Timeout Get Baud");
+    DEBUG_PRINTLN(F("Timeout when Get Baud"));
     value = 0;
   }
 
   return value;
 }
 
-uint8_t SHT::readAddress()
+uint8_t SHTC3::readAddress()
 {
   uint8_t value;
 
@@ -312,22 +319,22 @@ uint8_t SHT::readAddress()
     }
     else
     {
-      DEBUG_PRINTLN("Error CRC in Get Addr");
+      DEBUG_PRINTLN(F("Error CRC in Get Addr"));
       value = 0;
     }
   }
   else
   {
-    DEBUG_PRINTLN("Timeout Get Addr");
+    DEBUG_PRINTLN(F("Timeout when Get Addr"));
     value = 0;
   }
 
   return value;
 }
 
-/* ------------------------------------------------------------------------- */
+/* ------------------------- Configuration Settings ------------------------ */
 
-bool SHT::setBaudrate(uint8_t baud)
+bool SHTC3::setBaudrate(uint8_t baud)
 {
   /* Remove all previous junk data (if have) */
   while (port->available())
@@ -371,18 +378,18 @@ bool SHT::setBaudrate(uint8_t baud)
     }
     else
     {
-      DEBUG_PRINTLN("Error CRC in Set Baud");
+      DEBUG_PRINTLN(F("Error CRC in Set Baud"));
       return false;
     }
   }
   else
   {
-    DEBUG_PRINTLN("Timeout Set Baud");
+    DEBUG_PRINTLN(F("Timeout when Set Baud"));
     return false;
   }
 }
 
-bool SHT::setAddress(uint8_t addr)
+bool SHTC3::setAddress(uint8_t addr)
 {
   /* Remove all previous junk data (if have) */
   while (port->available())
@@ -426,13 +433,13 @@ bool SHT::setAddress(uint8_t addr)
     }
     else
     {
-      DEBUG_PRINTLN("Error CRC in Set Addr");
+      DEBUG_PRINTLN(F("Error CRC in Set Addr"));
       return false;
     }
   }
   else
   {
-    DEBUG_PRINTLN("Timeout Set Addr");
+    DEBUG_PRINTLN(F("Timeout when Set Addr"));
     return false;
   }
 }

@@ -14,6 +14,22 @@ SoftwareSerial::SoftwareSerial(uint8_t receivePin, uint8_t transmitPin)
 SoftwareSerial RS485(2, 3); // RX, TX
 
 ===================================================================================================
+CÁC DÒNG CẢM BIẾN				|
+================================================|
+
+SHTC3	- IP67 V1 RS485 Modbus RTU	-> https://hshop.vn/products/cam-bien-do-am-nhiet-do-khong-khi-shtc3-temperature-humidity-sensor-ip67-v1-rs485-modbus-rtu
+	| Vỏ IP67 V1 có thiết kế chống bụi
+
+SHTC3	- V2 RS485 Modbus RTU		-> https://hshop.vn/products/cam-bien-do-am-nhiet-do-khong-khi-shtc3-temperature-humidity-sensor-v3-rs485-modbus-rtu
+	| Vỏ V2 có lớp vỏ ngoài bằng nhựa PE
+
+SHTC3	- V3 RS485 Modbus RTU		-> https://hshop.vn/products/cam-bien-do-am-nhiet-do-khong-khi-shtc3-temperature-humidity-sensor-v3-rs485-modbus-rtu
+	| Vỏ V3 có lớp vỏ ngoài bằng PVC
+
+SHTC3	- V4 RS485 Modbus RTU		-> https://hshop.vn/products/cam-bien-do-am-nhiet-do-khong-khi-shtc3-temperature-humidity-sensor-v4-rs485-modbus-rtu
+	| Vỏ V4 có thiết kế chống bụi, nước
+
+===================================================================================================
 CRC						|
 ================================================|
 

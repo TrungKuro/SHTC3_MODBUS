@@ -1,16 +1,19 @@
 /**
- * This program code allows you to configure 2 important parameters of the Modbus SHT sensor.
- * "Address" and "Baudrate" parameters of the sensor.
+ * This program code allows you to configure 2 important parameters of the "SHTC3 RS485 Modbus RTU".
+ * That are "Address" and "Baudrate" parameters of the sensor.
+ *
+ * When opening the "Serial Monitor" of the Arduino IDE.
+ * Please choose Baudrate "115200" and "No line ending".
  */
 
-#include "SHTxxModbus.h"
+#include "SHTC3Modbus.h"
 
 /* ------------------------------------------------------------------------- */
 
 #define RX_SHT 2
 #define TX_SHT 3
 
-SHT demo(RX_SHT, TX_SHT, BAUD_4800, 0x01);
+SHTC3 demo(RX_SHT, TX_SHT, BAUD_4800, 0x01);
 
 String inputData = "";
 
@@ -20,7 +23,7 @@ void setup()
 {
   Serial.begin(115200);
   Serial.println(F("-----------------------------------------------"));
-  Serial.println(F("Start configuration SHT Modbus (HSHOP)"));
+  Serial.println(F("Start configuration SHTC3 Modbus (HSHOP)"));
   Serial.println(F("Please choose \"No line ending\""));
   Serial.println("");
   Serial.println(F("Enter [0] to init the sensor with Baudrate 2400"));

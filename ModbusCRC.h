@@ -1,9 +1,9 @@
 #ifndef __MODBUS_CRC_H__
 #define __MODBUS_CRC_H__
 
-/* ------------------------------------------------------------------------- */
-
 #include <Arduino.h>
+
+/* ------------------------------------------------------------------------- */
 
 /*  CRC16_MODBUS
 **  http://www.sunshine2k.de/coding/javascript/crc/crc_js.html
