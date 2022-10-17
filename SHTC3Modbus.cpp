@@ -41,6 +41,20 @@ SHTC3::SHTC3(uint8_t rxPin, uint8_t txPin, uint8_t baud, uint8_t addr)
 
 /* ----------------------------- Initialization ---------------------------- */
 
+void SHTC3::begin()
+{
+  if (typeSerial == HARD_SERIAL)
+  {
+    HardwareSerial *hs = (HardwareSerial *)port;
+    hs->begin(_baud);
+  }
+  else if (typeSerial == SOFT_SERIAL)
+  {
+    SoftwareSerial *ss = (SoftwareSerial *)port;
+    ss->begin(_baud);
+  }
+}
+
 void SHTC3::begin(uint16_t baud)
 {
   switch (baud)

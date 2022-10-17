@@ -102,6 +102,7 @@ public:
   virtual ~SHTC3() { delete port; }                                                           // Virtual Destructor
 
   /* Initialization */
+  void begin();
   void begin(uint16_t baud);
   void setTimeout(uint16_t timeOut);
 

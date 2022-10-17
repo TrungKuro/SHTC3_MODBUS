@@ -4,6 +4,13 @@
     "ostream": "cpp",
     "system_error": "cpp",
     "type_traits": "cpp",
-    "xtr1common": "cpp"
+    "xtr1common": "cpp",
+    "initializer_list": "cpp",
+    "iterator": "cpp",
+    "memory": "cpp",
+    "xlocnum": "cpp",
+    "xmemory": "cpp",
+    "xstring": "cpp",
+    "xutility": "cpp"
   }
 }
