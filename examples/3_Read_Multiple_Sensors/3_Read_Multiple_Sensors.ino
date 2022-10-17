@@ -34,7 +34,7 @@ void setup()
 void loop()
 {
   /* ---------------------------- Read Sensor 1 ---------------------------- */
-  demo_1.begin();
+  demo_1.begin(4800);
   data = demo_1.getData();
 
   Serial.print(F("Sensor 1: "));
@@ -46,7 +46,7 @@ void loop()
   delay(250);
 
   /* ---------------------------- Read Sensor 2 ---------------------------- */
-  demo_2.begin();
+  demo_2.begin(2400);
   data = demo_2.getData();
 
   Serial.print(F("Sensor 2: "));
@@ -58,7 +58,7 @@ void loop()
   delay(250);
 
   /* ---------------------------- Read Sensor 3 ---------------------------- */
-  demo_3.begin();
+  demo_3.begin(9600);
   data = demo_3.getData();
 
   Serial.print(F("Sensor 3: "));
